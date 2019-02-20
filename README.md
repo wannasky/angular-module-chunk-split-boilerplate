@@ -22,7 +22,26 @@
 
 1. 此`boilerplate`第三方库都将打包入`vendor.js`,一方面让项目模块代码尽可能**小**，同时也解决了其他模块引入此库导致的问题
 
-2. 自定义配置如下
+```javascript
+cacheGroups: {
+
+    node_modules: {
+      test: (chunk) => {
+        if(chunk && chunk.userRequest) {
+          return chunk.userRequest.includes('node_modules');
+        }
+        return false;
+      },
+      name: () => {
+        return 'vendor';
+      },
+      chunks: 'all'
+    }
+  }
+
+```
+
+2. 模块目录自定义配置如下
 
 ```javascript
 new LazyChunkName({
