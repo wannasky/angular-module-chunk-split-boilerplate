@@ -12,9 +12,6 @@
   3. 项目模块代码以补丁的形式进行更新
   
   
-为达到以上`outputHashing`必须为`false`
-
-
 ## 使用说明
 
 1. 请将`angular.json`文件的`namedChunks`设置为`false`
@@ -37,6 +34,8 @@ function jsonpScriptSrc(chunkId) {
 }
 
 ```
+
+5. 具体配置可参加`webpack.extra.config.js`
 
 ## 说明
 
