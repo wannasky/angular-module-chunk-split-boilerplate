@@ -1,8 +1,13 @@
 const path = require('path');
 const LazyChunkName = require('angular-named-lazy-chunks-webpack-plugin');
-const webpack = require('webpack');
+const ModuleHashWebpackPlugin = require('./plugins/moduleHashWebpackPlugin');
+const JsonpMainTemplateWebpackPlugin = require('./plugins/jsonpMainTemplateWebpackPlugin');
 
 module.exports = {
+
+  output: {
+    filename: '[name].js'
+  },
 
   optimization: {
     splitChunks: {
@@ -27,6 +32,8 @@ module.exports = {
   },
 
   plugins: [
+    new JsonpMainTemplateWebpackPlugin(),
+
     new LazyChunkName({
       nameResolver: (filePath) => {
         if(filePath.indexOf('/src/app/modules')) {
@@ -36,6 +43,8 @@ module.exports = {
         }
         return null;
       }
-    })
+    }),
+
+    new ModuleHashWebpackPlugin()
   ]
 }

@@ -31,6 +31,7 @@
             ],
             "scripts": [],
             "namedChunks": false,
+            "outputHashing": "all",
             "customWebpackConfig": {
               "path": "./webpack.extra.config.js",
               "mergeStrategies": { "externals": "replace" },

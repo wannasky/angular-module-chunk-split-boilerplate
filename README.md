@@ -10,13 +10,33 @@
   2. 项目模块代码更新时，不影响项目框架层面代码（除了引用了第三方库（位于node_modules），下面有说明）
   
   3. 项目模块代码以补丁的形式进行更新
+  
+  
+为达到以上`outputHashing`必须为`false`
 
 
 ## 使用说明
 
 1. 请将`angular.json`文件的`namedChunks`设置为`false`
 
-2. 根据实际情况配置`webpack.extra.config.js`
+2. 请将`angular.json`文件的`outputHashing`设置为`false`
+
+3. `webpack.extra.config.js`配置`filename: '[name].js'`
+
+4. `outputHashing`设置为`false`后文件名不会发生改变，为了添加文件缓存版本控制， 可如下操作：
+
+引入`ModuleHashWebpackPlugin`插件，此插件会对**入口文件**进行`chunkhash`处理，异步模块不进行处理
+再引入 `JsonpMainTemplateWebpackPlugin`插件修改异步加载模块的方法,对js进行version后缀处理（window.version可以通过接口动态获取），这样
+就可以控制项目缓存
+
+```javascript
+
+// 位于 runtime.js
+function jsonpScriptSrc(chunkId) {
+  return __webpack_require__.p + '' + chunkId + '.js?v=' + window.version || '';
+}
+
+```
 
 ## 说明
 
